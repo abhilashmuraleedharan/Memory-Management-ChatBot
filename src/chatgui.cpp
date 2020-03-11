@@ -37,6 +37,8 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
     // create text control for user input
     int idTextXtrl = 1;
     _userTextCtrl = new wxTextCtrl(ctrlPanel, idTextXtrl, "", wxDefaultPosition, wxSize(width, 50), wxTE_PROCESS_ENTER, wxDefaultValidator, wxTextCtrlNameStr);
+    _userTextCtrl->SetBackgroundStyle( wxBG_STYLE_COLOUR );
+    _userTextCtrl->SetBackgroundColour( *wxLIGHT_GREY );
     Connect(idTextXtrl, wxEVT_TEXT_ENTER, wxCommandEventHandler(ChatBotFrame::OnEnter));
 
     // create vertical sizer for panel alignment and add panels
