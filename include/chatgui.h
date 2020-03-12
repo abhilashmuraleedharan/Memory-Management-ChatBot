@@ -15,7 +15,8 @@ private:
     wxBitmap _image;
 
     // data handles (owned)
-    std::unique_ptr<ChatLogic> _chatLogic;
+    std::unique_ptr<ChatLogic> _chatLogic;  // Using a unique smart pointer type
+                                            // to enforce exclusive ownership
 
 public:
     // constructor / destructor

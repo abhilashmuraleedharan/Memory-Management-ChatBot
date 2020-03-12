@@ -128,6 +128,10 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
 ChatBotPanelDialog::~ChatBotPanelDialog()
 {
+    /* 
+     * No need to deallocate memory for _chatlogic
+     * since _chatLogic is now a smart pointer created on stack.
+     */
 }
 
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
