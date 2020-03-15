@@ -27,16 +27,17 @@ public:
     ChatBot(std::string filename);  // constructor WITH memory allocation
 
     // Implement Rule of 5
-    ~ChatBot();                     // Overload Destructor
-    ChatBot(ChatBot &);             // Overload Copy Constructor
-    ChatBot &operator=(ChatBot &);  // Overload Copy Assignment Operator
-    ChatBot(ChatBot &&);            // Overload Move Constructor
-    ChatBot &operator=(ChatBot &&); // Overload Move Assignment Operator
+    ~ChatBot();                              // Overload Destructor
+    ChatBot(ChatBot &) = delete;             // Delete Copy Constructor to prevent copies of chatbot instance
+    ChatBot &operator=(ChatBot &) = delete;  // Delete Copy Assignment Operator to prevent copies of chatbot instance
+    ChatBot(ChatBot &&);                     // Overload Move Constructor
+    ChatBot &operator=(ChatBot &&);          // Overload Move Assignment Operator
 
     // getters / setters
     void SetCurrentNode(GraphNode *node);
     void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
     void SetChatLogicHandle(ChatLogic *chatLogic) { _chatLogic = chatLogic; }
+    ChatLogic *GetChatLogicHandle() { return _chatLogic; }
     wxBitmap *GetImageHandle() { return _image; }
 
     // communication
