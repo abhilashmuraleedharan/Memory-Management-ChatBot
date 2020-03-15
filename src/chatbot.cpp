@@ -32,7 +32,7 @@ ChatBot::ChatBot(std::string filename)
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
-// Overload Destructor
+// overload destructor
 ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor" << std::endl;
@@ -45,12 +45,13 @@ ChatBot::~ChatBot()
     }
 }
 
-// Overload Move Constructor
-ChatBot::ChatBot(ChatBot &&source)
+// overload copy constructor
+ChatBot::ChatBot(ChatBot &source)
 {
-    std::cout << "ChatBot Move Constructor" << std::endl;
+    std::cout << "ChatBot Copy Constructor" << std::endl;
 
-    _image = source._image; // Transfer Ownership
+    // adopting an exclusive ownership copy policy
+    _image = source._image; // transfer Ownership
     source._image = NULL;   // wxWidgets uses NULL and not nullptr
 
     _currentNode = source._currentNode;
@@ -58,7 +59,51 @@ ChatBot::ChatBot(ChatBot &&source)
     _chatLogic   = source._chatLogic;
 
     /* 
-     * Since source is no longer required at the caller scope
+     * invalidate source handles
+     */
+    source._currentNode = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+}
+
+// overload copy assignment operator
+ChatBot &ChatBot::operator=(ChatBot &source)
+{
+    std::cout << "ChatBot Copy Assignment Constructor" << std::endl;
+
+    // adopting an exclusive ownership copy policy
+    if (this == &source) { return *this; }  // handle self assignment case
+
+    _image = source._image; // transfer ownership
+    source._image = NULL;   // wxWidgets uses NULL and not nullptr
+
+    _currentNode = source._currentNode;
+    _rootNode    = source._rootNode;
+    _chatLogic   = source._chatLogic;
+
+    /* 
+     * invalidate source handles
+     */
+    source._currentNode = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+    return *this;
+}
+
+// overload move constructor
+ChatBot::ChatBot(ChatBot &&source)
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+
+    _image = source._image; // transfer Ownership
+    source._image = NULL;   // wxWidgets uses NULL and not nullptr
+
+    _currentNode = source._currentNode;
+    _rootNode    = source._rootNode;
+    _chatLogic   = source._chatLogic;
+
+    /* 
+     * since source is no longer required at the caller scope
      * invalidate the data handles
      */
     source._currentNode = nullptr;
@@ -66,13 +111,13 @@ ChatBot::ChatBot(ChatBot &&source)
     source._chatLogic = nullptr;
 }   
 
-// Overload Move Assignment Operator
+// overload move assignment operator
 ChatBot &ChatBot::operator=(ChatBot &&source) 
 {
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
-    if (this == &source) { return *this; }  // Handle self assignment case
+    if (this == &source) { return *this; }  // handle self assignment case
 
-    _image = source._image; // Transfer Ownership
+    _image = source._image; // transfer ownership
     source._image = NULL;   // wxWidgets uses NULL and not nullptr
 
     _currentNode = source._currentNode;
@@ -80,7 +125,7 @@ ChatBot &ChatBot::operator=(ChatBot &&source)
     _chatLogic   = source._chatLogic;
 
     /* 
-     * Since source is no longer required at the caller scope
+     * since source is no longer required at the caller scope
      * invalidate the data handles
      */
     source._currentNode = nullptr;
