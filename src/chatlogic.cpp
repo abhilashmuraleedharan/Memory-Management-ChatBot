@@ -31,12 +31,6 @@ ChatLogic::~ChatLogic()
 {
     // delete chatbot instance
     delete _chatBot;
-
-    // delete all edges
-    for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
-    {
-        delete *it;
-    }
 }
 
 template <typename T>
@@ -145,8 +139,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             GraphEdge *edge = new GraphEdge(id);
                             edge->SetChildNode((*childNode).get());
                             edge->SetParentNode((*parentNode).get());
-                            _edges.push_back(edge);
-
+                            
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
 

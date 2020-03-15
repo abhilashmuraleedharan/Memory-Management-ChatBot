@@ -8,13 +8,6 @@ GraphNode::GraphNode(int id)
 
 GraphNode::~GraphNode()
 {
-    //// STUDENT CODE
-    ////
-
-    // delete _chatBot; 
-
-    ////
-    //// EOF STUDENT CODE
 }
 
 void GraphNode::AddToken(std::string token)
@@ -29,7 +22,8 @@ void GraphNode::AddEdgeToParentNode(GraphEdge *edge)
 
 void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
 {
-    _childEdges.push_back(edge);
+    std::unique_ptr<GraphEdge> smart_edge(edge);  // Create a smart pointer using raw edge pointer
+    _childEdges.emplace_back(std::move(smart_edge));
 }
 
 //// STUDENT CODE
@@ -50,11 +44,5 @@ void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 
 GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 {
-    //// STUDENT CODE
-    ////
-
-    return _childEdges[index];
-
-    ////
-    //// EOF STUDENT CODE
+    return _childEdges[index].get();
 }
