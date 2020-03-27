@@ -25,7 +25,7 @@ void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
     _childEdges.emplace_back(std::move(smart_edge));
 }
 
-void GraphNode::MoveChatbotHere(ChatBot &&chatBot)
+void GraphNode::MoveChatbotHere(ChatBot chatBot)
 {
     _chatBot = std::move(chatBot); 
     _chatBot.GetChatLogicHandle()->SetChatbotHandle(&_chatBot);  // set the ChatLogic _chatBot handle
